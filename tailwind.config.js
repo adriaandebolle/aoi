@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'pt-serif': ['"PT Serif"', 'serif'],
+        'dancing-script': ['"Dancing Script"', 'cursive'],
+      },
+    },
   },
   plugins: [],
 }
