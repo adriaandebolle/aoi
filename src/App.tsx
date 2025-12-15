@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Phone,
-  Mail,
-  MapPin,
-  Shield,
-  Award,
-  Users,
-  Search,
-} from "lucide-react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Menu, X, Search } from "lucide-react";
+import HomePage from "./components/HomePage";
+import ServicesPage from "./components/ServicesPage";
+import ServiceDetailPage from "./components/ServiceDetailPage";
+import AboutPage from "./components/AboutPage";
+import ContactPage from "./components/ContactPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 const ArtOfInvestigations = () => {
-  const [currentPage, setCurrentPage] = useState("home");
   const [language, setLanguage] = useState<"nl" | "fr" | "en">("nl");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -847,11 +842,7 @@ const ArtOfInvestigations = () => {
 
   const t = translations[language];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.email && !formData.phone) {
       alert(t.contact.form.emailOrPhone);
@@ -862,770 +853,199 @@ const ArtOfInvestigations = () => {
       return;
     }
     alert(t.contact.form.formSent);
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      company: "",
+      service: "",
+      message: "",
+      privacy: false,
+    });
   };
-
-  const HomePage = () => (
-    <div>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-br from-yellow-700 to-yellow-900 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <div className="mb-8 inline-block">
-            <div className="w-32 h-32 mx-auto bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center shadow-2xl">
-              <Search className="w-16 h-16 text-black" />
-            </div>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-[#b9a55c] to-[#a98f3a] bg-clip-text text-transparent">
-            {t.hero.title}
-          </h1>
-
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-            {t.hero.subtitle}
-          </p>
-
-          <button
-            onClick={() => setCurrentPage("services")}
-            className="bg-gradient-to-r from-[#b9a55c] to-[#a98f3a] text-black px-10 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300"
-          >
-            {t.hero.cta}
-          </button>
-        </div>
-      </section>
-
-      {/* USP Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                <Shield className="w-10 h-10 text-black" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.about.discretion}</h3>
-              <p className="text-gray-600">{t.usp.discretion}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                <Award className="w-10 h-10 text-black" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.about.expertise}</h3>
-              <p className="text-gray-600">{t.usp.expertise}</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                <Users className="w-10 h-10 text-black" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.about.results}</h3>
-              <p className="text-gray-600">{t.usp.results}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Preview */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-4">
-            {t.services.title}
-          </h2>
-          <p className="text-center text-gray-600 mb-16 max-w-3xl mx-auto">
-            {t.services.subtitle}
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div
-              onClick={() => setCurrentPage("corporate")}
-              className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
-            >
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-[#b9a55c] transition-colors">
-                {t.services.corporate.title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {t.services.corporate.description}
-              </p>
-              <div className="text-[#b9a55c] font-semibold">
-                {t.services.readMore}
-              </div>
-            </div>
-
-            <div
-              onClick={() => setCurrentPage("digital")}
-              className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
-            >
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-[#b9a55c] transition-colors">
-                {t.services.digital.title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {t.services.digital.description}
-              </p>
-              <div className="text-[#b9a55c] font-semibold">
-                {t.services.readMore}
-              </div>
-            </div>
-
-            <div
-              onClick={() => setCurrentPage("private")}
-              className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
-            >
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-[#b9a55c] transition-colors">
-                {t.services.private.title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {t.services.private.description}
-              </p>
-              <div className="text-[#b9a55c] font-semibold">
-                {t.services.readMore}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-black to-gray-900 text-white">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-6">{t.cta.title}</h2>
-          <p className="text-xl text-gray-300 mb-8">{t.cta.subtitle}</p>
-          <button
-            onClick={() => setCurrentPage("contact")}
-            className="bg-gradient-to-r from-[#b9a55c] to-[#a98f3a] text-black px-10 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300"
-          >
-            {t.nav.contact}
-          </button>
-        </div>
-      </section>
-    </div>
-  );
-
-  const ServicesPage = () => (
-    <div className="py-20 bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto px-6">
-        <h1 className="text-5xl font-bold text-center mb-4">
-          {t.services.title}
-        </h1>
-        <p className="text-center text-gray-600 mb-16 max-w-3xl mx-auto text-lg">
-          {t.services.subtitle}
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <div
-            onClick={() => setCurrentPage("corporate")}
-            className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
-          >
-            <h2 className="text-3xl font-bold mb-6 text-[#b9a55c]">
-              {t.services.corporate.title}
-            </h2>
-            <p className="text-gray-600 mb-6">
-              {t.services.corporate.description}
-            </p>
-            <ul className="space-y-3">
-              {services[language].corporate.map((service, i) => (
-                <li key={i} className="flex items-start">
-                  <span className="text-[#b9a55c] mr-2">•</span>
-                  <span>{service}</span>
-                </li>
-              ))}
-            </ul>
-            <button className="mt-6 text-[#b9a55c] font-semibold hover:underline">
-              {t.services.moreInfo}
-            </button>
-          </div>
-
-          <div
-            onClick={() => setCurrentPage("digital")}
-            className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
-          >
-            <h2 className="text-3xl font-bold mb-6 text-[#b9a55c]">
-              {t.services.digital.title}
-            </h2>
-            <p className="text-gray-600 mb-6">
-              {t.services.digital.description}
-            </p>
-            <ul className="space-y-3">
-              {services[language].digital.map((service, i) => (
-                <li key={i} className="flex items-start">
-                  <span className="text-[#b9a55c] mr-2">•</span>
-                  <span>{service}</span>
-                </li>
-              ))}
-            </ul>
-            <button className="mt-6 text-[#b9a55c] font-semibold hover:underline">
-              {t.services.moreInfo}
-            </button>
-          </div>
-
-          <div
-            onClick={() => setCurrentPage("private")}
-            className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
-          >
-            <h2 className="text-3xl font-bold mb-6 text-[#b9a55c]">
-              {t.services.private.title}
-            </h2>
-            <p className="text-gray-600 mb-6">
-              {t.services.private.description}
-            </p>
-            <ul className="space-y-3">
-              {services[language].private.map((service, i) => (
-                <li key={i} className="flex items-start">
-                  <span className="text-[#b9a55c] mr-2">•</span>
-                  <span>{service}</span>
-                </li>
-              ))}
-            </ul>
-            <button className="mt-6 text-[#b9a55c] font-semibold hover:underline">
-              {t.services.moreInfo}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const ServiceDetailPage = ({ category, categoryKey }) => {
-    const details = t.serviceDetails[categoryKey];
-
-    return (
-      <div className="py-20 bg-gray-50 min-h-screen">
-        <div className="max-w-4xl mx-auto px-6">
-          <button
-            onClick={() => setCurrentPage("services")}
-            className="text-[#b9a55c] mb-8 hover:underline flex items-center"
-          >
-            {t.services.backToServices}
-          </button>
-
-          <h1 className="text-5xl font-bold mb-8">{category}</h1>
-
-          <div className="space-y-8">
-            {details.map((item, i) => (
-              <div key={i} className="bg-white p-8 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold mb-4 text-[#b9a55c]">
-                  {item.title}
-                </h2>
-                <p className="text-gray-700 mb-6">{item.description}</p>
-                <button
-                  onClick={() => {
-                    setFormData({ ...formData, service: item.title });
-                    setCurrentPage("contact");
-                  }}
-                  className="bg-gradient-to-r from-[#b9a55c] to-[#a98f3a] text-black px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all"
-                >
-                  {t.services.contactUs}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const AboutPage = () => (
-    <div className="py-20 bg-gray-50 min-h-screen">
-      <div className="max-w-4xl mx-auto px-6">
-        <h1 className="text-5xl font-bold text-center mb-4">{t.about.title}</h1>
-        <p className="text-2xl text-center text-gray-600 mb-12">
-          {t.about.subtitle}
-        </p>
-        <div className="bg-white p-12 rounded-lg shadow-lg mb-12">
-          <p className="text-lg text-gray-700 leading-relaxed mb-8">
-            {t.about.description}
-          </p>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            {t.about.extra}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-            <Shield className="w-16 h-16 mx-auto mb-4 text-[#b9a55c]" />
-            <h3 className="text-xl font-bold mb-3">{t.about.discretion}</h3>
-            <p className="text-gray-600">{t.about.discretionText}</p>
-          </div>
-
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-            <Award className="w-16 h-16 mx-auto mb-4 text-[#b9a55c]" />
-            <h3 className="text-xl font-bold mb-3">{t.about.expertise}</h3>
-            <p className="text-gray-600">{t.about.expertiseText}</p>
-          </div>
-
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-            <Users className="w-16 h-16 mx-auto mb-4 text-[#b9a55c]" />
-            <h3 className="text-xl font-bold mb-3">{t.about.results}</h3>
-            <p className="text-gray-600">{t.about.resultsText}</p>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-r from-black to-gray-900 text-white p-12 rounded-lg shadow-2xl">
-          <h2 className="text-3xl font-bold mb-6">{t.about.method}</h2>
-          <div className="space-y-6">
-            <div className="flex items-start">
-              <div className="bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-black">
-                1
-              </div>
-              <div>
-                <h3 className="text-xl font-bold mb-2">{t.about.step1}</h3>
-                <p className="text-gray-300">{t.about.step1Text}</p>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-black">
-                2
-              </div>
-              <div>
-                <h3 className="text-xl font-bold mb-2">{t.about.step2}</h3>
-                <p className="text-gray-300">{t.about.step2Text}</p>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-black">
-                3
-              </div>
-              <div>
-                <h3 className="text-xl font-bold mb-2">{t.about.step3}</h3>
-                <p className="text-gray-300">{t.about.step3Text}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const ContactPage = () => (
-    <div className="py-20 bg-gray-50 min-h-screen">
-      <div className="max-w-4xl mx-auto px-6">
-        <h1 className="text-5xl font-bold text-center mb-4">
-          {t.contact.title}
-        </h1>
-        <p className="text-center text-gray-600 mb-12 text-lg">
-          {t.contact.subtitle}
-        </p>
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <div className="bg-white p-8 rounded-lg shadow-lg mb-8">
-              <h3 className="text-2xl font-bold mb-6">{t.contact.details}</h3>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <Mail className="w-6 h-6 text-[#b9a55c] mr-3 flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-semibold">{t.contact.email}</p>
-                    <a
-                      href="mailto:contact@artofinvestigations.be"
-                      className="text-gray-600 hover:text-[#b9a55c]"
-                    >
-                      contact@artofinvestigations.be
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <MapPin className="w-6 h-6 text-[#b9a55c] mr-3 flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-semibold">{t.contact.location}</p>
-                    <p className="text-gray-600">{t.contact.locationText}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Shield className="w-6 h-6 text-[#b9a55c] mr-3 flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-semibold">{t.contact.recognition}</p>
-                    <p className="text-gray-600">
-                      {t.contact.recognitionText1}
-                    </p>
-                    <p className="text-gray-600">
-                      {t.contact.recognitionText2}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-black to-gray-900 text-white p-8 rounded-lg shadow-lg">
-              <h3 className="text-xl font-bold mb-4">{t.contact.rates}</h3>
-              <p className="text-gray-300">{t.contact.ratesText}</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-8 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-bold mb-6">{t.contact.form.title}</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  {t.contact.form.name} *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#b9a55c]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  {t.contact.form.email}
-                </label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#b9a55c]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  {t.contact.form.phone}
-                </label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#b9a55c]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  {t.contact.form.company}
-                </label>
-                <input
-                  type="text"
-                  value={formData.company}
-                  onChange={(e) =>
-                    setFormData({ ...formData, company: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#b9a55c]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  {t.contact.form.service}
-                </label>
-                <select
-                  value={formData.service}
-                  onChange={(e) =>
-                    setFormData({ ...formData, service: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#b9a55c]"
-                >
-                  <option value="">{t.contact.form.selectService}</option>
-                  <optgroup label={t.services.corporate.title}>
-                    {services[language].corporate.map((s, i) => (
-                      <option key={i} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label={t.services.digital.title}>
-                    {services[language].digital.map((s, i) => (
-                      <option key={i} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label={t.services.private.title}>
-                    {services[language].private.map((s, i) => (
-                      <option key={i} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </optgroup>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  {t.contact.form.message}
-                </label>
-                <textarea
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#b9a55c]"
-                ></textarea>
-              </div>
-
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  required
-                  checked={formData.privacy}
-                  onChange={(e) =>
-                    setFormData({ ...formData, privacy: e.target.checked })
-                  }
-                  className="mt-1 mr-2"
-                />
-                <label className="text-sm">{t.contact.form.privacy} *</label>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-[#b9a55c] to-[#a98f3a] text-black px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all"
-              >
-                {t.contact.form.submit}
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-black text-white sticky top-0 z-50 shadow-lg">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div
-              onClick={() => setCurrentPage("home")}
-              className="flex items-center space-x-3 cursor-pointer"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                <Search className="w-6 h-6 text-black" />
-              </div>
-              <span className="text-xl font-bold">ART OF INVESTIGATIONS</span>
-            </div>
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <button
-                onClick={() => setCurrentPage("home")}
-                className="hover:text-[#b9a55c] transition-colors"
-              >
-                {t.nav.home}
-              </button>
-              <button
-                onClick={() => setCurrentPage("services")}
-                className="hover:text-[#b9a55c] transition-colors"
-              >
-                {t.nav.services}
-              </button>
-              <button
-                onClick={() => setCurrentPage("about")}
-                className="hover:text-[#b9a55c] transition-colors"
-              >
-                {t.nav.about}
-              </button>
-              <button
-                onClick={() => setCurrentPage("contact")}
-                className="hover:text-[#b9a55c] transition-colors"
-              >
-                {t.nav.contact}
-              </button>
-
-              <div className="flex items-center space-x-2 border-l border-gray-700 pl-6">
-                <button
-                  onClick={() => setLanguage("nl")}
-                  className={`px-2 py-1 rounded ${
-                    language === "nl"
-                      ? "bg-[#b9a55c] text-black"
-                      : "hover:text-[#b9a55c]"
-                  }`}
-                >
-                  NL
-                </button>
-                <button
-                  onClick={() => setLanguage("fr")}
-                  className={`px-2 py-1 rounded ${
-                    language === "fr"
-                      ? "bg-[#b9a55c] text-black"
-                      : "hover:text-[#b9a55c]"
-                  }`}
-                >
-                  FR
-                </button>
-                <button
-                  onClick={() => setLanguage("en")}
-                  className={`px-2 py-1 rounded ${
-                    language === "en"
-                      ? "bg-[#b9a55c] text-black"
-                      : "hover:text-[#b9a55c]"
-                  }`}
-                >
-                  EN
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 space-y-4">
-              <button
-                onClick={() => {
-                  setCurrentPage("home");
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left hover:text-[#b9a55c]"
-              >
-                {t.nav.home}
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentPage("services");
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left hover:text-[#b9a55c]"
-              >
-                {t.nav.services}
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentPage("about");
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left hover:text-[#b9a55c]"
-              >
-                {t.nav.about}
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentPage("contact");
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left hover:text-[#b9a55c]"
-              >
-                {t.nav.contact}
-              </button>
-
-              <div className="flex space-x-2 pt-4 border-t border-gray-700">
-                <button
-                  onClick={() => setLanguage("nl")}
-                  className={`px-3 py-1 rounded ${
-                    language === "nl"
-                      ? "bg-[#b9a55c] text-black"
-                      : "border border-white"
-                  }`}
-                >
-                  NL
-                </button>
-                <button
-                  onClick={() => setLanguage("fr")}
-                  className={`px-3 py-1 rounded ${
-                    language === "fr"
-                      ? "bg-[#b9a55c] text-black"
-                      : "border border-white"
-                  }`}
-                >
-                  FR
-                </button>
-                <button
-                  onClick={() => setLanguage("en")}
-                  className={`px-3 py-1 rounded ${
-                    language === "en"
-                      ? "bg-[#b9a55c] text-black"
-                      : "border border-white"
-                  }`}
-                >
-                  EN
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
-
-      {/* Page Content */}
-      {currentPage === "home" && <HomePage />}
-      {currentPage === "services" && <ServicesPage />}
-      {currentPage === "corporate" && (
-        <ServiceDetailPage
-          category={t.services.corporate.title}
-          categoryKey="corporate"
-        />
-      )}
-      {currentPage === "digital" && (
-        <ServiceDetailPage
-          category={t.services.digital.title}
-          categoryKey="digital"
-        />
-      )}
-      {currentPage === "private" && (
-        <ServiceDetailPage
-          category={t.services.private.title}
-          categoryKey="private"
-        />
-      )}
-      {currentPage === "about" && <AboutPage />}
-      {currentPage === "contact" && <ContactPage />}
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                  <Search className="w-5 h-5 text-black" />
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen bg-white">
+        {/* Navigation */}
+        <nav className="bg-black text-white sticky top-0 z-50 shadow-lg">
+          <div className="max-w-6xl mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <Link to="/" className="flex items-center space-x-3 cursor-pointer">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
+                  <Search className="w-6 h-6 text-black" />
                 </div>
-                <span className="font-bold">AOI</span>
+                <span className="text-xl font-bold">ART OF INVESTIGATIONS</span>
+              </Link>
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center space-x-8">
+                <Link to="/" className="hover:text-[#b9a55c] transition-colors">
+                  {t.nav.home}
+                </Link>
+                <Link to="/services" className="hover:text-[#b9a55c] transition-colors">
+                  {t.nav.services}
+                </Link>
+                <Link to="/about" className="hover:text-[#b9a55c] transition-colors">
+                  {t.nav.about}
+                </Link>
+                <Link to="/contact" className="hover:text-[#b9a55c] transition-colors">
+                  {t.nav.contact}
+                </Link>
+
+                <div className="flex items-center space-x-2 border-l border-gray-700 pl-6">
+                  <button
+                    onClick={() => setLanguage("nl")}
+                    className={`px-2 py-1 rounded ${
+                      language === "nl"
+                        ? "bg-[#b9a55c] text-black"
+                        : "hover:text-[#b9a55c]"
+                    }`}
+                  >
+                    NL
+                  </button>
+                  <button
+                    onClick={() => setLanguage("fr")}
+                    className={`px-2 py-1 rounded ${
+                      language === "fr"
+                        ? "bg-[#b9a55c] text-black"
+                        : "hover:text-[#b9a55c]"
+                    }`}
+                  >
+                    FR
+                  </button>
+                  <button
+                    onClick={() => setLanguage("en")}
+                    className={`px-2 py-1 rounded ${
+                      language === "en"
+                        ? "bg-[#b9a55c] text-black"
+                        : "hover:text-[#b9a55c]"
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
               </div>
-              <p className="text-gray-400 text-sm">{t.footer.tagline}</p>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X /> : <Menu />}
+              </button>
             </div>
 
-            <div>
-              <h4 className="font-bold mb-4">{t.footer.contact}</h4>
-              <p className="text-gray-400 text-sm mb-2">
-                contact@artofinvestigations.be
-              </p>
-              <p className="text-gray-400 text-sm">{t.contact.locationText}</p>
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+              <div className="md:hidden mt-4 pb-4 space-y-4">
+                <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                  {t.nav.home}
+                </Link>
+                <Link to="/services" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                  {t.nav.services}
+                </Link>
+                <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                  {t.nav.about}
+                </Link>
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                  {t.nav.contact}
+                </Link>
+
+                <div className="flex space-x-2 pt-4 border-t border-gray-700">
+                  <button
+                    onClick={() => setLanguage("nl")}
+                    className={`px-3 py-1 rounded ${
+                      language === "nl"
+                        ? "bg-[#b9a55c] text-black"
+                        : "border border-white"
+                    }`}
+                  >
+                    NL
+                  </button>
+                  <button
+                    onClick={() => setLanguage("fr")}
+                    className={`px-3 py-1 rounded ${
+                      language === "fr"
+                        ? "bg-[#b9a55c] text-black"
+                        : "border border-white"
+                    }`}
+                  >
+                    FR
+                  </button>
+                  <button
+                    onClick={() => setLanguage("en")}
+                    className={`px-3 py-1 rounded ${
+                      language === "en"
+                        ? "bg-[#b9a55c] text-black"
+                        : "border border-white"
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </nav>
+
+        {/* Page Content */}
+        <Routes>
+          <Route path="/" element={<HomePage t={t} />} />
+          <Route path="/services" element={<ServicesPage t={t} services={services} language={language} />} />
+          <Route path="/services/:categoryKey" element={<ServiceDetailPage t={t} setFormData={setFormData} formData={formData} />} />
+          <Route path="/about" element={<AboutPage t={t} />} />
+          <Route path="/contact" element={<ContactPage t={t} formData={formData} setFormData={setFormData} services={services} language={language} handleSubmit={handleSubmit} />} />
+        </Routes>
+
+        {/* Footer */}
+        <footer className="bg-black text-white py-12">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              <div>
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
+                    <Search className="w-5 h-5 text-black" />
+                  </div>
+                  <span className="font-bold">AOI</span>
+                </div>
+                <p className="text-gray-400 text-sm">{t.footer.tagline}</p>
+              </div>
+
+              <div>
+                <h4 className="font-bold mb-4">{t.footer.contact}</h4>
+                <p className="text-gray-400 text-sm mb-2">
+                  contact@artofinvestigations.be
+                </p>
+                <p className="text-gray-400 text-sm">{t.contact.locationText}</p>
+              </div>
+
+              <div>
+                <h4 className="font-bold mb-4">{t.footer.info}</h4>
+                <p className="text-gray-400 text-sm mb-2">
+                  {t.contact.recognitionText2}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {t.contact.recognitionText1}
+                </p>
+              </div>
             </div>
 
-            <div>
-              <h4 className="font-bold mb-4">{t.footer.info}</h4>
-              <p className="text-gray-400 text-sm mb-2">
-                {t.contact.recognitionText2}
-              </p>
-              <p className="text-gray-400 text-sm">
-                {t.contact.recognitionText1}
-              </p>
+            <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+              <p>{t.footer.copyright}</p>
+              <div className="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" className="hover:text-[#b9a55c]">
+                  {t.footer.privacy}
+                </a>
+                <a href="#" className="hover:text-[#b9a55c]">
+                  {t.footer.terms}
+                </a>
+              </div>
             </div>
           </div>
-
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>{t.footer.copyright}</p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-[#b9a55c]">
-                {t.footer.privacy}
-              </a>
-              <a href="#" className="hover:text-[#b9a55c]">
-                {t.footer.terms}
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </Router>
   );
 };
 
