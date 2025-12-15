@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
+import logo from "./assets/logo.svg";
 import HomePage from "./components/HomePage";
 import ServicesPage from "./components/ServicesPage";
 import ServiceDetailPage from "./components/ServiceDetailPage";
@@ -873,10 +874,10 @@ const ArtOfInvestigations = () => {
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <Link to="/" className="flex items-center space-x-3 cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                  <Search className="w-6 h-6 text-black" />
+                <img src={logo} alt="logo" className="w-12 h-12" />
+                <div>
+                  <p className="text-xl font-bold font-pt-serif">ART <span className="font-dancing-script font-normal">of</span> INVESTIGATIONS</p>
                 </div>
-                <span className="text-xl font-bold">ART OF INVESTIGATIONS</span>
               </Link>
               {/* Desktop Menu */}
               <div className="hidden md:flex items-center space-x-8">
