@@ -72,7 +72,7 @@ const ArtOfInvestigations = () => {
           "Neem contact op voor een vertrouwelijke inschatting van uw dossier",
       },
       about: {
-        title: "Over Ons ALLEN",
+        title: "Over Ons",
         subtitle: "Een scherp oog. Een heldere geest. Een integere aanpak.",
         description:
           "Art of Investigations is een onafhankelijk onderzoeks- en recherchebureau dat complexe dossiers onderzoekt met analytische precisie en menselijke intuïtie. Vanuit Liedekerke werken we in heel België voor advocaten, bedrijven, verzekeraars en particulieren.",
