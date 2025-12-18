@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import logo from "./assets/logo.svg";
 import HomePage from "./components/HomePage";
 import ServicesPage from "./components/ServicesPage";
@@ -873,10 +873,17 @@ const ArtOfInvestigations = () => {
         <nav className="bg-black text-white sticky top-0 z-50 shadow-lg">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-3 cursor-pointer">
+              <Link
+                to="/"
+                className="flex items-center space-x-3 cursor-pointer"
+              >
                 <img src={logo} alt="logo" className="w-12 h-12" />
                 <div>
-                  <p className="text-xl font-bold font-pt-serif">ART <span className="font-dancing-script font-normal">of</span> INVESTIGATIONS</p>
+                  <p className="text-xl" style={{ fontFamily: "PT Serif" }}>
+                    ART <span style={{ textDecoration: "cursive" }}>of</span>
+                    <br />
+                    INVESTIGATIONS
+                  </p>
                 </div>
               </Link>
               {/* Desktop Menu */}
@@ -884,13 +891,22 @@ const ArtOfInvestigations = () => {
                 <Link to="/" className="hover:text-[#b9a55c] transition-colors">
                   {t.nav.home}
                 </Link>
-                <Link to="/services" className="hover:text-[#b9a55c] transition-colors">
+                <Link
+                  to="/services"
+                  className="hover:text-[#b9a55c] transition-colors"
+                >
                   {t.nav.services}
                 </Link>
-                <Link to="/about" className="hover:text-[#b9a55c] transition-colors">
+                <Link
+                  to="/about"
+                  className="hover:text-[#b9a55c] transition-colors"
+                >
                   {t.nav.about}
                 </Link>
-                <Link to="/contact" className="hover:text-[#b9a55c] transition-colors">
+                <Link
+                  to="/contact"
+                  className="hover:text-[#b9a55c] transition-colors"
+                >
                   {t.nav.contact}
                 </Link>
 
@@ -940,16 +956,32 @@ const ArtOfInvestigations = () => {
             {/* Mobile Menu */}
             {mobileMenuOpen && (
               <div className="md:hidden mt-4 pb-4 space-y-4">
-                <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-left hover:text-[#b9a55c]"
+                >
                   {t.nav.home}
                 </Link>
-                <Link to="/services" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                <Link
+                  to="/services"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-left hover:text-[#b9a55c]"
+                >
                   {t.nav.services}
                 </Link>
-                <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                <Link
+                  to="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-left hover:text-[#b9a55c]"
+                >
                   {t.nav.about}
                 </Link>
-                <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="block w-full text-left hover:text-[#b9a55c]">
+                <Link
+                  to="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-left hover:text-[#b9a55c]"
+                >
                   {t.nav.contact}
                 </Link>
 
@@ -993,10 +1025,36 @@ const ArtOfInvestigations = () => {
         {/* Page Content */}
         <Routes>
           <Route path="/" element={<HomePage t={t} />} />
-          <Route path="/services" element={<ServicesPage t={t} services={services} language={language} />} />
-          <Route path="/services/:categoryKey" element={<ServiceDetailPage t={t} setFormData={setFormData} formData={formData} />} />
+          <Route
+            path="/services"
+            element={
+              <ServicesPage t={t} services={services} language={language} />
+            }
+          />
+          <Route
+            path="/services/:categoryKey"
+            element={
+              <ServiceDetailPage
+                t={t}
+                setFormData={setFormData}
+                formData={formData}
+              />
+            }
+          />
           <Route path="/about" element={<AboutPage t={t} />} />
-          <Route path="/contact" element={<ContactPage t={t} formData={formData} setFormData={setFormData} services={services} language={language} handleSubmit={handleSubmit} />} />
+          <Route
+            path="/contact"
+            element={
+              <ContactPage
+                t={t}
+                formData={formData}
+                setFormData={setFormData}
+                services={services}
+                language={language}
+                handleSubmit={handleSubmit}
+              />
+            }
+          />
         </Routes>
 
         {/* Footer */}
@@ -1006,7 +1064,7 @@ const ArtOfInvestigations = () => {
               <div>
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center">
-                    <Search className="w-5 h-5 text-black" />
+                    <img src={logo} alt="logo" className="w-5 h-5" />
                   </div>
                   <span className="font-bold">AOI</span>
                 </div>
@@ -1018,7 +1076,9 @@ const ArtOfInvestigations = () => {
                 <p className="text-gray-400 text-sm mb-2">
                   contact@artofinvestigations.be
                 </p>
-                <p className="text-gray-400 text-sm">{t.contact.locationText}</p>
+                <p className="text-gray-400 text-sm">
+                  {t.contact.locationText}
+                </p>
               </div>
 
               <div>

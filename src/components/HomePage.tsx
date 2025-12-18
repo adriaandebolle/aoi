@@ -1,6 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Shield, Award, Users, Search } from "lucide-react";
+import { Shield, Award, Users } from "lucide-react";
+import logo from "./../assets/logo.svg";
 
 const HomePage = ({ t }) => (
   <div>
@@ -14,8 +14,8 @@ const HomePage = ({ t }) => (
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <div className="mb-8 inline-block">
-          <div className="w-32 h-32 mx-auto bg-gradient-to-br from-[#b9a55c] to-[#a98f3a] rounded-full flex items-center justify-center shadow-2xl">
-            <Search className="w-16 h-16 text-black" />
+          <div className="w-32 h-32 mx-auto bg-black rounded-full flex items-center justify-center shadow-2xl">
+            <img src={logo} alt="logo" className="w-16 h-16" />
           </div>
         </div>
 
